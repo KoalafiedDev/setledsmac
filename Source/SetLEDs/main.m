@@ -1,11 +1,13 @@
+/*
+  setleds for Mac - https://github.com/damieng/setledsmac
+  Copyright 2015-2017 Damien Guard. GPL 2 licensed.
 
-/*  setleds for Mac
- https://github.com/damieng/setledsmac
- Copyright 2015-2017 Damien Guard. GPL 2 licenced.
-
- Monitor mode added by Raj Perera - https://github.com/rajiteh/setledsmac-monitor
- Keyboard event sniffer code is from https://github.com/objective-see/sniffMK
- */
+  Contributions:
+  - Raj Perera: Monitor mode (https://github.com/rajiteh/setledsmac-monitor)
+  - KoalafiedDev: Modernized Caps Lock detection and framework improvements.
+  
+  See the full changelog and details in the GitHub repository.
+*/
 
 #include "main.h"
 
@@ -15,7 +17,7 @@ static CFMachPortRef eventTap = NULL;
 
 int main(int argc, const char * argv[])
 {
-    printf("SetLEDs version 0.2 + Monitor - Based on https://github.com/damieng/setledsmac\n");
+    printf("SetLEDs version 0.3 + Modernized - Contributions by KoalafiedDev\n");
     parseOptions(argc, argv);
     printf("\n");
     return 0;
@@ -137,37 +139,34 @@ bail:
 //callback for mouse/keyboard events
 CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
-    
     if(kCGEventTapDisabledByTimeout == type)
     {
         CGEventTapEnable(eventTap, true);
-        fprintf(stderr, "Event tap timed out: restarting tap");
+        fprintf(stderr, "Event tap timed out: restarting tap\n");
         return event;
     }
     
-    if(kCGEventKeyUp == type)
+    // Handle modifier key changes (including Caps Lock)
+    if(kCGEventFlagsChanged == type)
     {
-        CGKeyCode keyCode = 0;
+        CGEventFlags flags = CGEventGetFlags(event);
         LedState changes[] = { NoChange, NoChange, NoChange, NoChange };
-        keyCode = (CGKeyCode)CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
         
-        switch (keyCode)
+        // Check if Caps Lock state changed
+        if (flags & kCGEventFlagMaskAlphaShift)  // Alpha shift is Caps Lock
         {
-            case 0x39:
-                changes[kHIDUsage_LED_CapsLock] = Toggle;
-                break;
-            case 0x47:
-                changes[kHIDUsage_LED_NumLock] = Toggle;
-                break;
-            case 0x6b:
-                changes[kHIDUsage_LED_ScrollLock] = Toggle;
-                break;
-            default:
-                return event;
-                
+            changes[kHIDUsage_LED_CapsLock] = On;
+            printf("Caps Lock ON\n");
         }
+        else
+        {
+            changes[kHIDUsage_LED_CapsLock] = Off;
+            printf("Caps Lock OFF\n");
+        }
+        
         setAllKeyboards(changes);
     }
+    
     return event;
 }
 
