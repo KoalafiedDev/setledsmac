@@ -17,15 +17,15 @@ echo "Making sure the file is executable .. "
 chmod +x "${BINARY}"
 
 echo "Installing launch agent .. "
-sed -e "s|%%BINARYPATH%%|${BINARY}|g" com.rajiteh.setleds.plist.template > /Library/LaunchDaemons/com.rajiteh.setleds.plist
+sed -e "s|%%BINARYPATH%%|${BINARY}|g" com.KoalafiedDev.setleds.plist.template > /Library/LaunchDaemons/com.KoalafiedDev.setleds.plist
 
 echo "Setting launch agent permissions .. "
-chown root:wheel /Library/LaunchDaemons/com.rajiteh.setleds.plist
+chown root:wheel /Library/LaunchDaemons/com.KoalafiedDev.setleds.plist
 
 echo "Enabling the launch configuration .. "
-launchctl load -w /Library/LaunchDaemons/com.rajiteh.setleds.plist
+launchctl load -w /Library/LaunchDaemons/com.KoalafiedDev.setleds.plist
 
 echo "Starting the job .. "
-launchctl start /Library/LaunchDaemons/com.rajiteh.setleds.plist || :
+launchctl start /Library/LaunchDaemons/com.KoalafiedDev.setleds.plist || :
 
 echo "All done! Numlock functionality should now be restored."
