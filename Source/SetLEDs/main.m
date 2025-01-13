@@ -3,7 +3,7 @@
   Copyright 2015-2017 Damien Guard. GPL 2 licensed.
 
   Contributions:
-  - Raj Perera: Monitor mode (https://github.com/rajiteh/setledsmac-monitor)
+  - Raj Perera: Monitor mode (https://github.com/rajiteh/setledsmac)
   - KoalafiedDev: Modernized Caps Lock detection and framework improvements.
   
   See the full changelog and details in the GitHub repository.

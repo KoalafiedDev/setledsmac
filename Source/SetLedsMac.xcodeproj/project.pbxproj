@@ -23,7 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C97B0C22219A6815009F7B69 /* SetLeds */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SetLeds; sourceTree = BUILT_PRODUCTS_DIR; };
+		C97B0C22219A6815009F7B69 /* SetLedsMac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SetLedsMac; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97B0C25219A6815009F7B69 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C97B0C2C219A685B009F7B69 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -50,7 +50,7 @@
 		C97B0C23219A6815009F7B69 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C97B0C22219A6815009F7B69 /* SetLeds */,
+				C97B0C22219A6815009F7B69 /* SetLedsMac */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,9 +67,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C97B0C21219A6815009F7B69 /* SetLeds */ = {
+		C97B0C21219A6815009F7B69 /* SetLedsMac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C97B0C29219A6815009F7B69 /* Build configuration list for PBXNativeTarget "SetLeds" */;
+			buildConfigurationList = C97B0C29219A6815009F7B69 /* Build configuration list for PBXNativeTarget "SetLedsMac" */;
 			buildPhases = (
 				C97B0C1E219A6815009F7B69 /* Sources */,
 				C97B0C1F219A6815009F7B69 /* Frameworks */,
@@ -79,9 +79,9 @@
 			);
 			dependencies = (
 			);
-			name = SetLeds;
+			name = SetLedsMac;
 			productName = SetLeds;
-			productReference = C97B0C22219A6815009F7B69 /* SetLeds */;
+			productReference = C97B0C22219A6815009F7B69 /* SetLedsMac */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -98,7 +98,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C97B0C1D219A6815009F7B69 /* Build configuration list for PBXProject "SetLEDs" */;
+			buildConfigurationList = C97B0C1D219A6815009F7B69 /* Build configuration list for PBXProject "SetLedsMac" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -110,7 +110,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C97B0C21219A6815009F7B69 /* SetLeds */,
+				C97B0C21219A6815009F7B69 /* SetLedsMac */,
 			);
 		};
 /* End PBXProject section */
@@ -260,7 +260,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C97B0C1D219A6815009F7B69 /* Build configuration list for PBXProject "SetLEDs" */ = {
+		C97B0C1D219A6815009F7B69 /* Build configuration list for PBXProject "SetLedsMac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C97B0C27219A6815009F7B69 /* Debug */,
@@ -269,7 +269,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C97B0C29219A6815009F7B69 /* Build configuration list for PBXNativeTarget "SetLeds" */ = {
+		C97B0C29219A6815009F7B69 /* Build configuration list for PBXNativeTarget "SetLedsMac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C97B0C2A219A6815009F7B69 /* Debug */,
