@@ -163,6 +163,6 @@ This project is licensed under the GNU General Public License v2.0. For more det
 
 ## Acknowledgments
 
-- Original project by Damien Guard: [setledsmac](https://github.com/damienguard/setledsmac)
-- Monitor mode added by Raj Perera: [setledsmac-monitor](https://github.com/rajperera/setledsmac-monitor)
+- Original project by Damien Guard: [setledsmac](https://github.com/damieng/setledsmac)
+- Monitor mode added by Raj Perera: [setledsmac-monitor](https://github.com/rajiteh/setledsmac)
 - Modernized Caps Lock detection and framework improvements by [KoalafiedDev](https://github.com/KoalafiedDev/setledsmac)
