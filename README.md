@@ -75,25 +75,57 @@ If you prefer to compile the program yourself:
 ---
 
 ## Usage
+### What This Tool Does For You
 
-### Basic Manual LED Control
+SetLEDs gives you control over your keyboard's LED indicators on macOS:
+- Fix non-working keyboard LEDs that macOS doesn't support natively
+- Control multiple keyboard LEDs at once with a single command
+- Automate LED controls through scripts or shortcuts
+- Target specific keyboards when you have multiple connected
 
-You can use the program directly in the terminal without running the installation script if you only want to control the LEDs manually:
+<br>
 
-- **Turn Off Caps Lock LED:**
-  ```bash
-  setleds -caps
-  ```
+### Command Line Syntax
 
-- **Turn On Caps Lock LED:**
-  ```bash
-  setleds +caps
-  ```
+Control any LED on your keyboard using simple commands:
+- Use `-` to turn an LED off (useful for turning off stuck LEDs)
+- Use `+` to turn an LED on (manually enable indicators)
+- Use `^` to toggle an LED (switch between on/off states)
 
-- **Toggle Caps Lock LED:**
-  ```bash
-  setleds ^caps
-  ```
+Choose which LED to control:
+- `scroll` for Scroll Lock LED
+- `num` for Numeric Lock LED
+- `caps` for Caps Lock LED
+
+For example, this command turns off Caps Lock, turns on Scroll Lock, and toggles Num Lock:
+```bash
+setleds -caps +scroll ^num
+```
+
+<br>
+
+### Working with Multiple Keyboards
+
+If you have multiple keyboards connected to your Mac, you can:
+- Control all keyboards at once (default behavior)
+- Target a specific keyboard using patterns
+
+<br>
+
+To control a specific keyboard, use the `-name` parameter with a wildcard pattern. For example, to only affect Apple keyboards:
+```bash
+setleds +scroll -name "Apple Key*"
+```
+
+<br>
+
+### Verbose Mode
+
+setledsmac will report what keys it changed for each keyboard. This is sometimes different per keyboard if either the keyboard does not have that modifier (e.g. Apple keyboards do not have scroll lock) or if the keyboard already had that LED on.
+
+Specifying -v on the command line will cause setledsmac to report the state of the other unchanged modifier keys on that keyboard too. Note that you will not see the state of modifiers that keyboard does not have.
+
+<br>
 
 ### Automatic Caps Lock LED Update
 
@@ -101,13 +133,19 @@ To enable automatic updates for the Caps Lock LED when the Caps Lock key is togg
 
 ---
 
+<br>
+
 ## Why Scroll Lock and Num Lock LEDs Cannot Be Updated Automatically
 
 Unlike the Caps Lock key, macOS does not provide built-in system APIs or events for monitoring the state of Scroll Lock and Num Lock keys. This limitation is due to:
 
+<br>
+
 ### Non-Standard Keys on macOS
 - Scroll Lock and Num Lock keys are not part of the standard macOS keyboard layout.
 - macOS lacks native constants or system-level hooks to detect state changes for these keys.
+
+<br>
 
 ### Hardware Limitations
 - The behavior of Scroll Lock and Num Lock LEDs depends on the hardware/firmware of the keyboard.
