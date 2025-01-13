@@ -1,68 +1,168 @@
-# SetLEDs for Mac OS X + Monitor Mode
+# SetLEDs for macOS
+
+SetLEDs is a command-line utility for macOS that allows users to control keyboard LED indicators, specifically the Caps Lock LED. This tool is particularly useful for keyboards that lack native macOS support, such as certain Cooler Master models.
 
 ---
-Original project: https://github.com/damieng/setledsmac
+
+## Features
+
+- **Caps Lock LED Control:** Monitor and update the Caps Lock LED based on key activity.
+- **Support for Non-Standard Keyboards:** Enhances compatibility with keyboards that do not have native macOS support.
+- **Command-Line Interface:** Easily integrate LED control into scripts and automation workflows.
+
 ---
 
-| Keyboard | High Sierra | Mojave | Catalina |
-|--|--|--|--|
-| Cooler Master MasterKeys Pro M | ✅ | ✅ | ✅
+## Installation
 
+### Option 1: Use the Precompiled Binary
 
-This command-line tool lets you set your keyboard LEDs. This is especially useful if you have a back-lit keyboard and don't want scroll lock, number lock or caps lock to remain unlit.
+1. **Download the Latest Release:**
+   - Go to the [Releases page](https://github.com/KoalafiedDev/setledsmac/releases).
+   - Download the latest precompiled binary.
 
-### Unlike many other solutions, this does not require you to install any third party utilities to manipulate or capture keystrokes. The utility built from this project runs standalone as a LaunchDaemon at login time and handles numlock, scrlck, and capslock LEDs.
+2. **(Optional) Run the Installation Script:**
+   If you want the Caps Lock LED to automatically update based on Caps Lock activity, follow these steps:
+   
+   - First, choose a location where you want the binary to be stored. It's recommended to place it in a directory like `/usr/local/bin/`, or a folder inside your user directory (e.g., `/Users/username/bin/`).
+   
+   - Run the following command to install the program with elevated permissions:
+     ```bash
+     sudo ./install.sh /path/to/setleds
+     ```
+     - Replace `/path/to/setleds` with the actual path where you placed the binary.
+   
+   The script will:
+   - Make the binary executable.
+   - Place the binary in the appropriate system directory.
+   - Open the **Security & Privacy** settings page in **System Preferences** under the **Accessibility** section for you.
 
-## Note
-Setting the LED on or off does not affect the behavior of that key so even though the led for caps lock will be on caps lock itself will still be off. Tapping the key will cause the lock to come on but the LED will already be on so it will not appear to change. Tapping it again will turn it off (and cause the LED to turn off).
+3. **Grant Accessibility Permissions:**
+   - In the opened **Security & Privacy** settings window, click the **+** button under the **Accessibility** section.
+   - Locate and add the `setleds` binary.
+   
+   **Note:** If the directory where you placed the binary isn't visible in the file picker:
+   - Use the shortcut `Command + Shift + G` to open the "Go to Folder" dialog.
+   - Enter the full path to the directory (e.g., `/usr/local/bin/`) and press **Enter**.
 
-## Accessibility Permission on Mojave and Up
+4. **Restart Your Mac:**
+   - Restart your Mac to apply the Accessibility permission changes.
 
-It is required that `setledsmac` is allowed accessibility functions for it to operate on OSX Mojave and up. Once you download the binary (or compile it yourself), place it on the location you want it to run and then open `System Preferences -> Security & Privacy -> Find the "Accesibility" section`. Unlock the pane by clicking on the padlock symbol, then press the `+` button to open a file browser. Now navigate to the location and select your `setleds` binary. Lock the pane by pressing the padlock icon again.
+<br>
+<br>
 
-![](accessibility.png)
+### Option 2: Build It Yourself from Source
 
+If you prefer to compile the program yourself:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/KoalafiedDev/setledsmac.git
+   cd setledsmac
+   ```
+
+2. **Compile the Program:**
+   - Open the project in Xcode.
+   - Select the appropriate build target.
+   - Build the project to produce the binary.
+
+3. **Run the Program:**
+   - Once compiled, the binary can be found in the build directory.
+   - Move it to a location of your choice and make it executable:
+     ```bash
+     chmod +x /path/to/setleds
+     ```
+
+---
 
 ## Usage
-You can set LEDs by simply specifing either a - to turn an LED off, a + to turn an LED on or a ^ to toggle an LED followed by either the word scroll (for scroll lock), num (for numeric lock) or caps (for caps lock). e.g.
+### What This Tool Does For You
 
+SetLEDs gives you control over your keyboard's LED indicators on macOS:
+- Fix non-working keyboard LEDs that macOS doesn't support natively
+- Control multiple keyboard LEDs at once with a single command
+- Automate LED controls through scripts or shortcuts
+- Target specific keyboards when you have multiple connected
+
+<br>
+
+### Command Line Syntax
+
+Control any LED on your keyboard using simple commands:
+- Use `-` to turn an LED off (useful for turning off stuck LEDs)
+- Use `+` to turn an LED on (manually enable indicators)
+- Use `^` to toggle an LED (switch between on/off states)
+
+Choose which LED to control:
+- `scroll` for Scroll Lock LED
+- `num` for Numeric Lock LED
+- `caps` for Caps Lock LED
+
+For example, this command turns off Caps Lock, turns on Scroll Lock, and toggles Num Lock:
 ```bash
 setleds -caps +scroll ^num
 ```
 
-### Name matching
-By default setledsmac will set the modifiers for all keyboards attached to your Mac. If you wish to limit it you can use the -name parameter followed by a wildcard. Note that if you want to use a space then specify the wildcard in quotes, e.g.
+<br>
 
+### Working with Multiple Keyboards
+
+If you have multiple keyboards connected to your Mac, you can:
+- Control all keyboards at once (default behavior)
+- Target a specific keyboard using patterns
+
+<br>
+
+To control a specific keyboard, use the `-name` parameter with a wildcard pattern. For example, to only affect Apple keyboards:
 ```bash
 setleds +scroll -name "Apple Key*"
 ```
 
-### Verbose mode
+<br>
 
-`setledsmac` will report what keys it changed for each keyboard. This is sometimes different per keyboard if either the keyboard does not have that modifier (e.g. Apple keyboards do not have scroll lock) or if the keyboard already had that LED on.
+### Verbose Mode
+
+setledsmac will report what keys it changed for each keyboard. This is sometimes different per keyboard if either the keyboard does not have that modifier (e.g. Apple keyboards do not have scroll lock) or if the keyboard already had that LED on.
 
 Specifying -v on the command line will cause setledsmac to report the state of the other unchanged modifier keys on that keyboard too. Note that you will not see the state of modifiers that keyboard does not have.
 
-### Monitor mode
+<br>
 
-Use the "monitor" sub command to run continuously and toggle LEDs on keypress. This allows running the binary as a daemon at startup for seamless functionality. This is useful if you have a keyboard incompatible with OSX that require frequent toggling of numlock keys (i.e., TKL CoolerMaster CM keyboards)
+### Automatic Caps Lock LED Update
 
-Usage:
-```
-$ setleds monitor
-```
+To enable automatic updates for the Caps Lock LED when the Caps Lock key is toggled, the installation script must be used. This will configure the necessary system permissions and services.
 
-### Automatic Startup
+---
 
-You may use the bundled LaunchDaemon configuration to launch setleds at startup. Note
+<br>
 
-```bash
-# Build the binary from the sources or download the pre-built release from the github repo.
-# Copy it to a specific path in your system (ie: /Users/jane/bin/setleds)
-# IMPORTANT: Don't forget to configure accessibility access (see above)
+## Why Scroll Lock and Num Lock LEDs Cannot Be Updated Automatically
 
-# Use the bundled script to setup the LaunchDaemon
-$ sudo ./install.sh /Users/jane/bin/setleds
-```
+Unlike the Caps Lock key, macOS does not provide built-in system APIs or events for monitoring the state of Scroll Lock and Num Lock keys. This limitation is due to:
 
-Restart the mac and now you should have numlock toggling functionality without extra action, just like a normal keyboard!
+<br>
+
+### Non-Standard Keys on macOS
+- Scroll Lock and Num Lock keys are not part of the standard macOS keyboard layout.
+- macOS lacks native constants or system-level hooks to detect state changes for these keys.
+
+<br>
+
+### Hardware Limitations
+- The behavior of Scroll Lock and Num Lock LEDs depends on the hardware/firmware of the keyboard.
+- Many keyboards implement these keys independently, without involving the operating system.
+
+As a result, this program focuses on controlling the Caps Lock LED, which macOS supports more consistently.
+
+---
+
+## License
+
+This project is licensed under the GNU General Public License v2.0. For more details, see the [LICENSE](LICENSE) file.
+
+---
+
+## Acknowledgments
+
+- Original project by Damien Guard: [setledsmac](https://github.com/damieng/setledsmac)
+- Monitor mode added by Raj Perera: [setledsmac-monitor](https://github.com/rajiteh/setledsmac)
+- Modernized Caps Lock detection and framework improvements by [KoalafiedDev](https://github.com/KoalafiedDev/setledsmac)
